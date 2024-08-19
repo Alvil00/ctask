@@ -18,6 +18,7 @@ else()
   message(WARNING "IPO is not supported: ${output}")
 endif()
 
+add_subdirectory(test)
 
 
 
