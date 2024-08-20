@@ -8,7 +8,8 @@ include_directories(include/)
 
 
 add_library(curves 
-  ${CMAKE_SOURCE_DIR}/src/Ellipsis.cpp)
+  ${CMAKE_SOURCE_DIR}/src/Ellipsis.cpp
+  ${CMAKE_SOURCE_DIR}/src/Helix.cpp)
 
 if(lto_result)
   message(STATUS "IPO is supported")
