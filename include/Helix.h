@@ -7,7 +7,14 @@ namespace ctask {
   class Helix : public BaseCurve {
   public:
     Helix(){}
-    Helix(float_t radius, float_t step, float_t t_offset=0.0) : BaseCurve(t_offset), radius_(radius), step_(step) {}
+    Helix(float_t radius, float_t step, float_t t_offset=0.0) : BaseCurve(t_offset), radius_(radius), step_(step) {
+      if(radius_ <= 0.0)
+        throw exceptions::CurveException {"The radii of curve must be greater than zero"};
+      if(!std::isfinite(radius_))
+        throw exceptions::CurveException {"The radii value must be finite"};
+      if(!std::isfinite(step_))
+        throw exceptions::CurveException {"The step value must be finite"};
+    }
     Helix(Helix &&) = default;
     Helix(const Helix &) = default;
     Helix &operator=(Helix &&) = default;
