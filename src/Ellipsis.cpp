@@ -8,6 +8,7 @@ namespace ctask {
     float_t tcurr = t - this->getOffset();
     v.x = std::cos(tcurr) * a_; 
     v.y = std::sin(tcurr) * b_; 
+    v.z = 0.0;
     return v; 
   }
 
@@ -17,6 +18,7 @@ namespace ctask {
     float_t tcurr = t - this->getOffset();
     v.x = -std::sin(tcurr) * a_;
     v.y = std::cos(tcurr) * b_;
+    v.z = 0.0;
     return v;
   }
 }
