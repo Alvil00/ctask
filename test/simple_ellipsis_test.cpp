@@ -22,6 +22,7 @@ class EllipsisFixture : public testing::Test
 };
 
 std::unique_ptr<std::vector<ctask::Ellipsis>> EllipsisFixture::e = nullptr;
+
 TEST_F(EllipsisFixture, EllipsisSimpleTest)
 {
   auto v = e->at(0)(test_t_value);
@@ -44,6 +45,24 @@ TEST_F(EllipsisFixture, EllipsisSimpleTest1)
   EXPECT_NEAR(d.x,-1.0*std::numbers::sqrt2_v<ctask::float_t>, eps);
   EXPECT_NEAR(d.y, 2.0*std::numbers::sqrt2_v<ctask::float_t>, eps);
   EXPECT_NEAR(d.z, 0.0, eps);
+}
+
+TEST(EllipsisCrashTest, EllipsisCrashTest)
+{
+  constexpr ctask::float_t inf = std::numeric_limits<ctask::float_t>::infinity();
+  constexpr ctask::float_t nan = std::numeric_limits<ctask::float_t>::quiet_NaN();
+
+  EXPECT_THROW((ctask::Ellipsis{inf, 3.0}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Ellipsis{3.0, inf}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Ellipsis{3.0, 1.0, inf}), ctask::exceptions::CurveException);
+
+  EXPECT_THROW((ctask::Ellipsis{nan, 3.0}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Ellipsis{3.0, nan}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Ellipsis{3.0, 1.0, nan}), ctask::exceptions::CurveException);
+
+  EXPECT_THROW((ctask::Ellipsis{-1.0, 3.0}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Ellipsis{3.0, -1.0}), ctask::exceptions::CurveException);
+  EXPECT_NO_THROW((ctask::Ellipsis{3.0, 2.0, -1.0}));
 }
 
 }
