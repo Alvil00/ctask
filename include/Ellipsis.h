@@ -1,8 +1,6 @@
 #ifndef __CTASK__ELLIPSIS_H__
 #define __CTASK__ELLIPSIS_H__
-
 #include "BaseCurve.h"
-
 
 namespace ctask {
 
@@ -11,8 +9,10 @@ public:
   Ellipsis() : BaseCurve() {}
   Ellipsis(float_t x_ratio, float_t y_ratio, float_t t_offset=0.0) : BaseCurve(t_offset), a_(x_ratio), b_(y_ratio)
   {
-    if(x_ratio == 0.0  || y_ratio == 0.0)
-        throw std::exception {};
+    if(x_ratio <= 0.0 || y_ratio <= 0.0 )
+        throw exceptions::CurveException {"The radii of curve must be greater than zero"};
+    if(!(std::isfinite(x_ratio) && std::isfinite(y_ratio)))
+        throw exceptions::CurveException {"The radii value must be finite"};
   }
   Ellipsis(Ellipsis &&) = default;
   Ellipsis(const Ellipsis &) = default;
