@@ -83,8 +83,6 @@ std::ostream& operator<<(std::ostream& os, const ctask::Vector3d& v ) {
         return os;
 }
 
-
-
 constexpr std::int32_t curves_num = 100;
 
 std::int32_t main(std::int32_t argc, char** argv)
@@ -103,7 +101,12 @@ std::int32_t main(std::int32_t argc, char** argv)
   auto circle_num = rcb.get_stat()[static_cast<std::int32_t>(BuildCurveType::kCircle)];
   std::cout << circle_num << " circle curves objects" << std::endl;
   std::cout << rcb.get_stat()[static_cast<std::int32_t>(BuildCurveType::kHelix)] << " helixes curves objects" << std::endl;
-  std::cout << "Sum " << curves_num << " objects" << std::endl;
+  std::cout << "Total count of created objects:" << curves_num << std::endl;
+
+  constexpr ctask::float_t targ = ctask::kQuaterPi;  
+  auto rprint = [targ](const CurvePtr& ptr){ std::cout << "Value: " <<(*ptr)(targ) << "Derivative: " << ptr->getDerivative(targ) <<std::endl;};
+  std::cout << "Result of evaluation every curve and the derivative for t=π/4 argument" << std::endl;
+  std::for_each(curves.cbegin(), curves.cend(), rprint);
 
   std::vector<CirclePtr> circles; 
   circles.reserve(circle_num);
@@ -112,7 +115,7 @@ std::int32_t main(std::int32_t argc, char** argv)
     if(CirclePtr cptr = dynamic_pointer_cast<Circle>(c))
       circles.push_back(cptr);
   }
-  std::cout << circles.size() << " circles copied in a container" << std::endl;
+  std::cout << circles.size() << " circles copied in the only-circle container" << std::endl;
 
   std::sort(circles.begin(), circles.end(),
       [](const auto& a, const auto& b){ return a->getRadius() < b->getRadius();});
@@ -124,10 +127,6 @@ std::int32_t main(std::int32_t argc, char** argv)
   std::cout << "Sum of circle radius accumulator:" << acc << std::endl;
 
 
-  constexpr ctask::float_t targ = ctask::kQuaterPi;  
-  auto rprint = [&targ](const CurvePtr& ptr){ std::cout << "Value: " <<(*ptr)(targ) << "Derivative: " << ptr->getDerivative(targ) <<std::endl;};
-  std::cout << "Result of every curve by t=π/4 argument" << std::endl;
-  std::for_each(curves.cbegin(), curves.cend(), rprint);
 
   return 0;
 }
