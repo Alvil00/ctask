@@ -5,10 +5,37 @@
 
 namespace ctask{
 
+namespace exceptions {
+  
+class CurveException: public std::exception
+{
+public:
+  explicit CurveException(const char* message)
+        : msg_(message) {}
+
+  explicit CurveException(const std::string& message)
+        : msg_(message) {}
+
+  virtual ~CurveException() {}
+
+  virtual const char* what() const noexcept {
+       return msg_.c_str();
+    }
+
+protected:
+    std::string msg_;
+};
+
+}
+
 class BaseCurve {
 public:
   BaseCurve(){}
-  explicit BaseCurve(float_t t_offset) : t_offset_(t_offset){}
+  explicit BaseCurve(float_t t_offset) : t_offset_(t_offset){
+    if(!std::isfinite(t_offset))
+      throw exceptions::CurveException {"Parameter offset value must be finite"};
+  }
+
   BaseCurve(BaseCurve &&) = default;
   BaseCurve(const BaseCurve &) = default;
   BaseCurve &operator=(BaseCurve &&) = default;

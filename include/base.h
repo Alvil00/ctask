@@ -2,6 +2,7 @@
 #define __CTASK__BASE_H__
 #include <limits>
 #include <exception>
+#include <string>
 #include <numbers>
 #include <cmath>
 
