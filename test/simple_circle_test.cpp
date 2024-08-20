@@ -46,4 +46,18 @@ TEST_F(CircleFixture, CircleSimpleTest1)
   EXPECT_NEAR(d.z, 0.0, eps);
 }
 
+TEST(CircleCrashTest, CircleCrashTest)
+{
+  constexpr ctask::float_t inf = std::numeric_limits<ctask::float_t>::infinity();
+  constexpr ctask::float_t nan = std::numeric_limits<ctask::float_t>::quiet_NaN();
+
+  EXPECT_THROW((ctask::Circle{inf}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Circle{3.0, inf}), ctask::exceptions::CurveException);
+
+  EXPECT_THROW((ctask::Circle{nan}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Circle{3.0, nan}), ctask::exceptions::CurveException);
+
+  EXPECT_THROW((ctask::Circle{-1.0}), ctask::exceptions::CurveException);
+  EXPECT_NO_THROW((ctask::Circle{3.0, -1.0}));
+}
 }
