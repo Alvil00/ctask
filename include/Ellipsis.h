@@ -23,7 +23,7 @@ public:
   Vector3d operator()(float_t t) const override;
   Vector3d getDerivative(float_t t) const override;
 
-  float_t getXRratio() const noexcept
+  float_t getXRatio() const noexcept
   {
     return a_;
   }
