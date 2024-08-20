@@ -31,4 +31,18 @@ if(GTest_FOUND)
   if(lto_result)
     set_property(TARGET SimpleCircleTest PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
   endif()
+
+  # Test 3 simple Helix test
+  add_executable(SimpleHelixTest simple_helix_test.cpp)
+
+  target_link_libraries(SimpleHelixTest
+                         GTest::gtest
+                         GTest::gtest_main
+                         curves)
+
+
+  gtest_discover_tests(SimpleHelixTest SimpleHelixTest)
+  if(lto_result)
+    set_property(TARGET SimpleHelixTest PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+  endif()
 endif()
