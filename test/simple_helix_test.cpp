@@ -46,4 +46,22 @@ TEST_F(HelixFixture, HelixSimpleTest1)
   EXPECT_NEAR(d.z,-1.0 / ctask::kPi, eps);
 }
 
+TEST(HelixCrashTest, HelixCrashTest)
+{
+  constexpr ctask::float_t inf = std::numeric_limits<ctask::float_t>::infinity();
+  constexpr ctask::float_t nan = std::numeric_limits<ctask::float_t>::quiet_NaN();
+
+  EXPECT_THROW((ctask::Helix{inf, 3.0}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Helix{3.0, inf}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Helix{3.0, 1.0, inf}), ctask::exceptions::CurveException);
+
+  EXPECT_THROW((ctask::Helix{nan, 3.0}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Helix{3.0, nan}), ctask::exceptions::CurveException);
+  EXPECT_THROW((ctask::Helix{3.0, 1.0, nan}), ctask::exceptions::CurveException);
+
+  EXPECT_THROW((ctask::Helix{-1.0, 3.0}), ctask::exceptions::CurveException);
+  EXPECT_NO_THROW((ctask::Helix{3.0, -1.0}));
+  EXPECT_NO_THROW((ctask::Helix{3.0, 2.0, -1.0}));
+}
+
 }
