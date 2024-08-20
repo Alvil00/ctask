@@ -15,6 +15,9 @@ add_library(curves ${CURVE_LIBRARY_TYPE}
   ${CMAKE_SOURCE_DIR}/src/Ellipsis.cpp
   ${CMAKE_SOURCE_DIR}/src/Helix.cpp)
 
+add_executable(${PROJECT_NAME} src/main.cpp)
+target_link_libraries(${PROJECT_NAME} curves)
+
 if(lto_result)
   message(STATUS "IPO is supported")
   #set_property(PROJECT_NAME ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
