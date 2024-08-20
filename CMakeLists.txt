@@ -6,8 +6,12 @@ check_ipo_supported(RESULT lto_result OUTPUT output LANGUAGES CXX)
 
 include_directories(include/)
 
+if(NOT DEFINED CURVE_LIBRARY_TYPE)
+  set(CURVE_LIBRARY_TYPE SHARED)
+endif()
+message(STATUS "Curves library make with ${CURVE_LIBRARY_TYPE} linkage")
 
-add_library(curves 
+add_library(curves ${CURVE_LIBRARY_TYPE} 
   ${CMAKE_SOURCE_DIR}/src/Ellipsis.cpp
   ${CMAKE_SOURCE_DIR}/src/Helix.cpp)
 
