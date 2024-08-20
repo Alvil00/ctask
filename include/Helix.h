@@ -21,8 +21,8 @@ namespace ctask {
     Helix &operator=(const Helix &) = default;
     ~Helix() override {}
 
-    Vector3d operator()(float_t) const override;
-    Vector3d getDerivative(float_t) const override;
+    Vector3d operator()(float_t) const noexcept override;
+    Vector3d getDerivative(float_t) const noexcept override;
 
     float_t getRadius() const noexcept
     {

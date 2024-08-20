@@ -2,7 +2,7 @@
 
 namespace ctask {
 
-  Vector3d Helix::operator()(float_t t) const 
+  Vector3d Helix::operator()(float_t t) const noexcept
   {
     Vector3d v;
     float_t tcurr = t - this->getOffset();
@@ -12,7 +12,7 @@ namespace ctask {
     return v;
   }
 
-  Vector3d Helix::getDerivative(float_t t) const
+  Vector3d Helix::getDerivative(float_t t) const noexcept
   {
     Vector3d v;
     float_t tcurr = t - this->getOffset();

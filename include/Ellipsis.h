@@ -20,8 +20,8 @@ public:
   Ellipsis &operator=(const Ellipsis &) = default;
   ~Ellipsis() override {}
 
-  Vector3d operator()(float_t t) const override;
-  Vector3d getDerivative(float_t t) const override;
+  Vector3d operator()(float_t t) const noexcept override;
+  Vector3d getDerivative(float_t t) const noexcept override;
 
   float_t getXRatio() const noexcept
   {

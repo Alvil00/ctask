@@ -41,8 +41,8 @@ public:
   BaseCurve &operator=(BaseCurve &&) = default;
   BaseCurve &operator=(const BaseCurve &) = default;
 
-  virtual Vector3d operator()(float_t t) const=0;
-  virtual Vector3d getDerivative(float_t t) const=0;
+  virtual Vector3d operator()(float_t t) const noexcept=0;
+  virtual Vector3d getDerivative(float_t t) const noexcept=0;
 
   virtual ~BaseCurve() {}
 
