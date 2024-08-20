@@ -6,6 +6,9 @@
 #include <random>
 #include <functional>
 #include <iomanip>
+#ifdef PARALELL
+#include "omp.h"
+#endif
 
 using Curve = ctask::BaseCurve;
 using CurvePtr = std::shared_ptr<Curve>;
@@ -83,7 +86,7 @@ std::ostream& operator<<(std::ostream& os, const ctask::Vector3d& v ) {
         return os;
 }
 
-constexpr std::int32_t curves_num = 100;
+constexpr std::int32_t curves_num = 100000;
 
 std::int32_t main(std::int32_t argc, char** argv)
 {
@@ -104,7 +107,7 @@ std::int32_t main(std::int32_t argc, char** argv)
   std::cout << "Total count of created objects:" << curves_num << std::endl;
 
   constexpr ctask::float_t targ = ctask::kQuaterPi;  
-  auto rprint = [targ](const CurvePtr& ptr){ std::cout << "Value: " <<(*ptr)(targ) << "Derivative: " << ptr->getDerivative(targ) <<std::endl;};
+  auto rprint = [](const CurvePtr& ptr){ std::cout << "Value: " <<(*ptr)(targ) << "Derivative: " << ptr->getDerivative(targ) <<std::endl;};
   std::cout << "Result of evaluation every curve and the derivative for t=π/4 argument" << std::endl;
   std::for_each(curves.cbegin(), curves.cend(), rprint);
 
@@ -122,11 +125,20 @@ std::int32_t main(std::int32_t argc, char** argv)
 
   std::cout << "Min circle radii:" << circles.front()->getRadius()<< std::endl;
   std::cout << "Max circle radii:" << circles.back()->getRadius() << std::endl;
-
-  ctask::float_t acc = std::reduce(circles.cbegin(), circles.cend(), 0.0,[](ctask::float_t t,const auto& c){return t+c->getRadius();});
+  ctask::float_t acc = 0.0;
+  #ifndef PARALELL
+  acc = std::reduce(circles.cbegin(), circles.cend(), 0.0,[](ctask::float_t t,const auto& c){return t+c->getRadius();});
+  #else // PARALELL
+  #pragma omp parallel
+  {
+    if(omp_get_thread_num() == 0)
+      std::cout << "Run OpenMP parallel with " << omp_get_num_threads( ) << " threads" << std::endl;
+    #pragma omp for reduction(+:acc)
+    for (const auto& c: circles)
+      acc += c->getRadius(); 
+  }
+  #endif
   std::cout << "Sum of circle radius accumulator:" << acc << std::endl;
-
-
 
   return 0;
 }

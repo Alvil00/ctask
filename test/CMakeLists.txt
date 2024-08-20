@@ -1,9 +1,9 @@
 
 enable_testing()
-
 find_package(GTest)
 
 if(GTest_FOUND)
+  include(GoogleTest)
   # Test 1 simple Ellipsis test
   add_executable(SimpleEllipsisTest simple_ellipsis_test.cpp)
 
