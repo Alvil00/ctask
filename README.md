@@ -47,9 +47,11 @@ For program building run several commands in shell
     cmake --preset conan-release
     cmake --build build/
 
-The building process tested with the next configurations
+The building process tested with the next configurations: /n
 
-    // MacOs M1 config
+/n
+macos arm clang config
+
     [settings]
     arch=armv8
     build_type=Release
@@ -59,6 +61,17 @@ The building process tested with the next configurations
     compiler.version=14
     os=Macos
 
+
+Ubuntu x86_64 gcc config
+
+    [settings]
+    arch=x86_64
+    build_type=Release
+    compiler=gcc
+    compiler.cppstd=gnu17
+    compiler.libcxx=libstdc++11
+    compiler.version=11
+    os=Linux
 
 # Execution
 
