@@ -1,7 +1,7 @@
 
 # General description
 
-The repository contains simple solution for the test task for CADEXCHANGER company with the next requirements:
+The repository contains simple solution for the test task for CADEXCHANGER with the next requirements:
 
 Design a small program in C++ that would implement support of 3D curves hierarchy.
 1. Support a few types of 3D geometric curves – circles, ellipses and 3D helixes. (Simplified
@@ -28,11 +28,15 @@ Requirements to the implementation:
 5. The implementation may use constructs of C++11 or higher.
 6. The code must compile with any compiler of your choice (gcc, Visual C++, etc).
 
-The program had written by Alex Vilensky.
+The program had written by Alexey Vilensky.
 The program consits from separate parts: curves library (default with dynamic linkage, but user can specify it by cmake CLI) which implements some basic curves operations, structures and executable file ctask which impements necessary operations according to the technical requirements.
 The building requires conan package manager and cmake.
 
 # Requirements
+
++ C++ compiler which supports C++20 standard
++ cmake>=3.20
++ conan>=2.6.0
 
 # Building
 
