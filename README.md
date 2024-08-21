@@ -32,3 +32,32 @@ The program had written by Alex Vilensky.
 The program consits from separate parts: curves library (default with dynamic linkage, but user can specify it by cmake CLI) which implements some basic curves operations, structures and executable file ctask which impements necessary operations according to the technical requirements.
 The building requires conan package manager and cmake.
 
+# Requirements
+
+# Building
+
+For program building run several commands in shell
+
+    conan profile detect --force
+    conan install . --output-folder=build --build=missing
+    cmake --preset conan-release
+    cmake --build build/
+
+The building process tested with the next configurations
+
+    // MacOs M1 config
+    [settings]
+    arch=armv8
+    build_type=Release
+    compiler=apple-clang
+    compiler.cppstd=gnu17
+    compiler.libcxx=libc++
+    compiler.version=14
+    os=Macos
+
+
+# Execution
+
+For execution purpose run several commands in shell
+
+    cd build && ./ctask
